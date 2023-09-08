@@ -13,3 +13,5 @@
 7- select curso, count(*) as qtdAlunos from matriculas group by curso;
 
 8- select produto, avg(receita) as MédiaDeReceita from vendas  group by produto;
+
+9- select receita, sum(receita) as ReceitaTotal from vendas where receita > '10000' group by receita;

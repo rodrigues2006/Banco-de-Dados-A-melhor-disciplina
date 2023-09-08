@@ -17,3 +17,5 @@
 9- select receita, sum(receita) as ReceitaTotal from vendas where receita > '10000' group by receita;
 
 10- select titulo, count(titulo) as contagemDeLivro from livros inner join autores on livros.id = livros.autor_id group by titulo HAVING COUNT(titulo) > 2;
+
+11- select autores.nome, livros.titulo from autores inner join livros on autores.id = livros.autor_id;

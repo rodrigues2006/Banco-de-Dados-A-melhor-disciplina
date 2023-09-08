@@ -19,3 +19,5 @@
 10- select titulo, count(titulo) as contagemDeLivro from livros inner join autores on livros.id = livros.autor_id group by titulo HAVING COUNT(titulo) > 2;
 
 11- select autores.nome, livros.titulo from autores inner join livros on autores.id = livros.autor_id;
+
+12- select alunos.nome, matriculas.curso from alunos  right join matriculas on alunos.id = matriculas.aluno_id;

@@ -9,3 +9,5 @@
 5- select produto, Sum(receita) from vendas group by produto;
 
 6- select nome, count(autor_id) as ContagemAutor from livros inner join autores on autores.id = livros.autor_id group by nome;
+
+7- select curso, count(*) as qtdAlunos from matriculas group by curso;

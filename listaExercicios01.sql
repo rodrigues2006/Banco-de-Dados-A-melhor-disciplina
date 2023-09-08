@@ -7,3 +7,5 @@
 4- select nome, curso from alunos inner join matriculas on alunos.id = matriculas.aluno_id where curso = 'Engenharia de Software';
 
 5- select produto, Sum(receita) from vendas group by produto;
+
+6- select nome, count(autor_id) as ContagemAutor from livros inner join autores on autores.id = livros.autor_id group by nome;

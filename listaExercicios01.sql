@@ -33,3 +33,5 @@
 17 - select produto, sum(receita) as MenorReceita from vendas group by produto order by MenorReceita asc limit 1;
 
 19- select alunos.nome, count(matriculas.curso) as QtdMatricula from alunos inner join matriculas on alunos.id = matriculas.aluno_id group by alunos.nome;
+
+20- select produto, count(*) as QtdTransações from vendas group by produto limit 1;

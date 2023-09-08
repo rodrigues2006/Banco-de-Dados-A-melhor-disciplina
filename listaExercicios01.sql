@@ -27,3 +27,5 @@
 14- select alunos.nome as NomeDoAluno, matriculas.curso as CursoOn from alunos right join matriculas on alunos.id = matriculas.aluno_id;
 
 15- select alunos.nome as NomeAluno, matriculas.curso from alunos inner join matriculas on alunos.id = matriculas.aluno_id;
+
+16- select autores.nome as Autor, count(livros.titulo) as QtdTitulos from autores  inner join livros on autores.id = livros.autor_id group by autores.nome order by QtdTitulos desc  limit 1;

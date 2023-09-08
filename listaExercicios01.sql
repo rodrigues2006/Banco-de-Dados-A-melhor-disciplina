@@ -31,3 +31,5 @@
 16- select autores.nome as Autor, count(livros.titulo) as QtdTitulos from autores  inner join livros on autores.id = livros.autor_id group by autores.nome order by QtdTitulos desc  limit 1;
 
 17 - select produto, sum(receita) as MenorReceita from vendas group by produto order by MenorReceita asc limit 1;
+
+19- select alunos.nome, count(matriculas.curso) as QtdMatricula from alunos inner join matriculas on alunos.id = matriculas.aluno_id group by alunos.nome;

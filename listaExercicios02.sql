@@ -38,3 +38,24 @@ end;
 //
 call sp_ContarLivrosPorCategoria('Autoajuda');
 //
+
+
+4-  delimiter // 
+create procedure sp_VerificarLivrosCategoria(in nome_categoria varchar(100))
+begin
+	declare id_CATEGORIA int;
+    declare QNT_livros_categorias int;
+    declare livro_existente varchar(100);
+    
+    select Categoria_ID into id_CATEGORIA from categoria where nome_categoria = nome;
+    select count(Categoria_ID) into qnt_livros_categorias from livro where Categoria_ID = id_CATEGORIA group by Categoria_ID;
+    if QNT_livros_categorias = 0 then 
+		 set livro_existente = 'Categoria não possui livros';
+    elseif QNT_livros_categorias > 0 then
+		 set livro_existente = 'Categoria possui livros';
+    end if;
+        select livro_existente;
+end;
+//
+-- drop procedure sp_VerificarLivrosCategoria//
+call sp_VerificarLivrosCategoria('Ciência')//

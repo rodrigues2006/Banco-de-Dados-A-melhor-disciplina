@@ -88,3 +88,37 @@ begin
 end;
 //
 call sp_TitulosPorCategoria('Romance')//
+
+
+7- delimiter //
+
+create procedure sp_AdicionarLivro(in nome_livro varchar(100),in editora_id int, in ano_publicacao int,in n_paginas int , in categoria_id int)
+begin
+	declare id_livro int default 1;
+    declare Livro_nao_repetido boolean default true;
+    declare Titulo_livro varchar(255);
+    declare qnt_livros int;
+    declare msg_erro varchar(200);
+    select count(*) into qnt_livros from livro;
+    
+    
+	while Livro_nao_repetido and id_livro <= qnt_livros   DO 
+		select Titulo into Titulo_livro from livro where Livro_ID = id_livro;
+        if nome_livro = Titulo_livro or editora_id > 2  then
+			set Livro_nao_repetido = false;
+            set msg_erro = "Titulo do livro repetido ou ID da editora inserido errado";
+            select msg_erro;
+		else
+			set id_livro = id_livro + 1;
+		end if;
+			
+	end while;
+    if Livro_nao_repetido then 
+		insert into livro values(qnt_livros + 1 ,nome_livro, editora_id ,  ano_publicacao , n_paginas  ,  categoria_id ) ;
+    end if;
+    
+		
+end;
+//
+
+call sp_AdicionarLivro('Maquiavel', 2,2023,456,2)//

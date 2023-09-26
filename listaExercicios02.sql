@@ -122,3 +122,17 @@ end;
 //
 
 call sp_AdicionarLivro('Maquiavel', 2,2023,456,2)//
+
+
+8- delimiter //
+
+create procedure sp_AutorMaisAntigo()
+
+begin
+	select Nome, Sobrenome from autor 
+    order by Data_Nascimento 
+    limit 1;
+end;
+//
+
+call sp_AutorMaisAntigo()//

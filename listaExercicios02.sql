@@ -57,5 +57,15 @@ begin
         select livro_existente;
 end;
 //
--- drop procedure sp_VerificarLivrosCategoria//
+
 call sp_VerificarLivrosCategoria('Ciência')//
+
+
+5- delimiter //
+
+ create procedure sp_LivrosAteAno(in ANO int)
+begin
+	 select Titulo, Ano_Publicacao from livro where Ano_Publicacao <= ano order by Ano_Publicacao;
+end;
+//
+call sp_LivrosAteAno(1999)//

@@ -12,7 +12,9 @@ call sp_ListarAutores ();
 
 
 
-2- create procedure sp_LivrosPorCategoria (in NomeCategoria varchar(100))
+2- delimiter //
+
+create procedure sp_LivrosPorCategoria (in NomeCategoria varchar(100))
 
 begin
 
@@ -28,7 +30,9 @@ call sp_LivrosPorCategoria  ('Romance');
 
 
 
-3- create procedure sp_ContarLivrosPorCategoria(in nomeCategoria varchar(100))
+3- delimiter //
+
+create procedure sp_ContarLivrosPorCategoria(in nomeCategoria varchar(100))
 
 begin
 	declare id_CATEGORIA int;
@@ -41,7 +45,9 @@ call sp_ContarLivrosPorCategoria('Autoajuda');
 
 
 4-  delimiter // 
+
 create procedure sp_VerificarLivrosCategoria(in nome_categoria varchar(100))
+
 begin
 	declare id_CATEGORIA int;
     declare QNT_livros_categorias int;
@@ -61,7 +67,8 @@ end;
 call sp_VerificarLivrosCategoria('Ciência')//
 
 
-5- delimiter //
+5- 
+delimiter //
 
  create procedure sp_LivrosAteAno(in ANO int)
 begin
@@ -69,3 +76,15 @@ begin
 end;
 //
 call sp_LivrosAteAno(1999)//
+
+
+6- delimiter //
+
+create procedure sp_TitulosPorCategoria(in nomeCategoria varchar(100))
+begin
+	declare id_CATEGORIA int;
+    select Categoria_ID into id_CATEGORIA from categoria where nomeCategoria = nome;
+	select Titulo from livro where Categoria_ID = id_CATEGORIA;
+end;
+//
+call sp_TitulosPorCategoria('Romance')//

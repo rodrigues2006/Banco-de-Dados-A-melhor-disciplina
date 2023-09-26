@@ -136,3 +136,17 @@ end;
 //
 
 call sp_AutorMaisAntigo()//
+
+
+9-delimiter //
+
+create procedure sp_ContarLivrosPorCategoria(in nomeCategoria varchar(100))
+begin
+	declare id_CATEGORIA int; 
+    select Categoria_ID into id_CATEGORIA from categoria where nomeCategoria = nome; 
+	select count(Categoria_ID) as QuantidadesLivros from livro where Categoria_ID = id_CATEGORIA group by Categoria_ID;
+    
+end;
+//
+
+Call sp_ContarLivrosPorCategoria('Ciência')//

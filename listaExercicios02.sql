@@ -37,7 +37,8 @@ create procedure sp_ContarLivrosPorCategoria(in nomeCategoria varchar(100))
 begin
 	declare id_CATEGORIA int;
     select Categoria_ID into id_CATEGORIA from categoria where nomeCategoria = nome;
-	select count(Categoria_ID) as QuantidadesLivros from livro where Categoria_ID = id_CATEGORIA group by Categoria_ID;
+	select count(Categoria_ID) as QuantidadesLivros from livro where Categoria_ID = id_CATEGORIA 
+    group by Categoria_ID;
 end;
 //
 call sp_ContarLivrosPorCategoria('Autoajuda');
@@ -54,7 +55,9 @@ begin
     declare livro_existente varchar(100);
     
     select Categoria_ID into id_CATEGORIA from categoria where nome_categoria = nome;
-    select count(Categoria_ID) into qnt_livros_categorias from livro where Categoria_ID = id_CATEGORIA group by Categoria_ID;
+    select count(Categoria_ID) into qnt_livros_categorias from livro where Categoria_ID = id_CATEGORIA 
+    group by Categoria_ID;
+    
     if QNT_livros_categorias = 0 then 
 		 set livro_existente = 'Categoria não possui livros';
     elseif QNT_livros_categorias > 0 then
@@ -150,3 +153,16 @@ end;
 //
 
 Call sp_ContarLivrosPorCategoria('Ciência')//
+
+
+10- delimiter //
+
+create procedure sp_LivrosESeusAutores()
+begin
+	select Titulo,Nome,Sobrenome from livro 
+    inner join autor_livro on livro.Livro_ID = autor_livro.Autor_Livro_ID
+    join autor on autor_livro.Autor_ID = autor.Autor_ID;
+end;
+//
+call sp_LivrosESeusAutores()//
+delimiter ;

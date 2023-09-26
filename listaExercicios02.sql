@@ -25,3 +25,16 @@ end;
 
 call sp_LivrosPorCategoria  ('Romance');
 //
+
+
+
+3- create procedure sp_ContarLivrosPorCategoria(in nomeCategoria varchar(100))
+
+begin
+	declare id_CATEGORIA int;
+    select Categoria_ID into id_CATEGORIA from categoria where nomeCategoria = nome;
+	select count(Categoria_ID) as QuantidadesLivros from livro where Categoria_ID = id_CATEGORIA group by Categoria_ID;
+end;
+//
+call sp_ContarLivrosPorCategoria('Autoajuda');
+//

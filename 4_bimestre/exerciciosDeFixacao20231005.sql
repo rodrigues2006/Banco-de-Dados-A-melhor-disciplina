@@ -119,3 +119,38 @@ end;
 delimiter ;
 
 call media_livros_por_editora();
+
+------5-----
+
+delimiter //
+create procedure autores_sem_livros ()
+begin
+	DECLARE done_loop int default 0;
+    declare v_id_autor int;
+    declare v_livro int;
+    declare v_primeiro_nome varchar(255);
+    declare v_ultimo_nome varchar(255);
+    
+    declare cursor_id_autor cursor for select id from autor;
+    declare continue handler for not found set done_loop = 1;
+    drop table temp_table;
+    create temporary table if not exists temp_table ( primeiro_nome VARCHAR(255) default "Todo os autores tem livros",ultimo_nome VARCHAR(255));
+    open cursor_id_autor;
+    while(done_loop != 1)do
+		fetch cursor_id_autor into v_id_autor;
+        select count(id_livro) into v_livro from livro_autor where id_autor = v_id_autor;
+        if v_livro <=> 0 then
+			select primeiro_nome,ultimo_nome into v_primeiro_nome ,v_ultimo_nome from autor where id = v_id_autor;
+			if not exists(select primeiro_nome,ultimo_nome from temp_table where primeiro_nome = v_primeiro_nome and ultimo_nome = v_ultimo_nome)
+            then 
+				insert into temp_table values(v_primeiro_nome ,v_ultimo_nome);
+            end if;
+        end if;
+    end while;
+    close cursor_id_autor;
+    select * from temp_table;
+end;
+//
+delimiter ;
+drop procedure autores_sem_livros;
+call autores_sem_livros ();

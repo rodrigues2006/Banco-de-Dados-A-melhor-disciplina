@@ -87,3 +87,35 @@ end;
 //
 delimiter ;
 call atualizar_resumos();
+
+---4------------------
+delimiter //
+create procedure media_livros_por_editora()
+begin
+	DECLARE done_loop int default 0;
+    declare v_id_editora int;
+    declare v_total_editora int default 0;
+    declare total_livros int default 0;
+    declare qnt_livro_for_editora int;
+    
+    declare cursor_id_editora cursor for select id from editora;
+    declare continue handler for not found set done_loop = 1;
+    open cursor_id_editora;
+    while(done_loop != 1)do
+		fetch cursor_id_editora into v_id_editora;
+        set v_total_editora = v_total_editora + 1;
+        
+        select count(livro.id) into qnt_livro_for_editora from livro inner join editora on livro.id_editora = editora.id where id_editora = v_id_editora;
+        set total_livros = total_livros + qnt_livro_for_editora;
+        if done_loop != 0 then
+			set total_livros = total_livros - qnt_livro_for_editora;
+            set v_total_editora = v_total_editora - 1;
+			select round(total_livros/v_total_editora,2);
+            end if;
+    end while;
+    close cursor_id_editora;
+end;
+//
+delimiter ;
+
+call media_livros_por_editora();

@@ -11,3 +11,11 @@ create trigger after_Cliente_insert
   insert into Auditoria
   set action = 'Delete',
   nome = old.nome;
+
+-----3------------------------
+create trigger after_cliente_update
+  after update on Clientes
+  for each row
+  insert into Auditoria
+  set action = 'Update',
+  old.nome = new.nome;

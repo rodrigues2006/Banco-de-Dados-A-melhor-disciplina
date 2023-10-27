@@ -38,3 +38,22 @@ BEGIN
 END;
 $$
  delimiter ;
+
+ -------------------------5-----------------------
+ delimiter $$
+create trigger after_pedido_insert
+after insert on Pedidos
+for each row
+begin
+ UPDATE Produtos
+  SET estoque = estoque - quantidade
+   WHERE produto_id = NEW.produto_id;
+  IF (SELECT estoque FROM Produtos WHERE produto_id = NEW.produto_id) < 5 THEN
+    
+INSERT INTO Auditoria (mensagem, data_hora) 
+    VALUES ('Estoque baixo para o produto ' || NEW.produto_id, NOW());
+  END IF;
+
+end;
+$$
+ delimiter ;

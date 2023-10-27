@@ -19,3 +19,22 @@ create trigger after_cliente_update
   insert into Auditoria
   set action = 'Update',
   old.nome = new.nome;
+
+
+-------4-----------
+delimiter $$
+
+CREATE TRIGGER before_cliente_update
+BEFORE UPDATE ON Clientes
+FOR EACH ROW
+BEGIN
+  IF NEW.nome IS NULL OR NEW.nome = '' THEN
+     INSERT INTO Auditoria
+    SET mensagem = 'erro';
+  ELSE
+    INSERT INTO Auditoria (action, mensagem, data_hora)
+    VALUES ('Update', 'Nome atualizado', NOW());
+  END IF;
+END;
+$$
+ delimiter ;
